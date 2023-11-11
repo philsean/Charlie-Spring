@@ -123,6 +123,7 @@ module.exports = {
                 command.run(client, message, args, User);
             } catch (error) {
                 log(error, 'err');
+                if (message.author.id === '916712541797896263') message.reply(`**( ${client.emojis.x} ) › Error:**\n\`\`\`\n${error}\`\`\``);
             }
         }
     },
