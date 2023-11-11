@@ -51,7 +51,7 @@ module.exports = {
         .setTitle(`( <:stock:1158003079178879016> ) › Bolsa de valores — ${c[crypto][1]}`)
         .setColor(color)
         .setDescription('>>> ' + board)
-        .setFooter({ text: `Última atualização: ${ms(Date.now() - client.database.crypto.get('lastUpdate'))}` });
+        .setFooter({ text: `Última atualização: ${ms(Date.now() /* - client.database.crypto.get('lastUpdate')*/)}` });
       
       embeds = [embed];
       let row = new ActionRowBuilder();
