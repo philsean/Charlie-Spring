@@ -5,7 +5,7 @@ module.exports = class Economy {
     this.client = client;
     this.database = require(`../Models/${modelName || 'User'}`);
     this.cooldowns = new NexusDB.Database({ path: './Database/Cooldowns.json' });
-    this.crypto = new NexusDB.Database({ path: './Database/Crypto.json' });
+    this.crypto = require(`../Models/Crypto.js`);
   }
   
   async getMoney (user) {
@@ -47,13 +47,17 @@ module.exports = class Economy {
     return res;
   }
   
-  getCrypto (crypto, userId) {
+  async getCrypto (crypto, userId) {
+    let cryptos = await this.crypto.find();
      if (crypto && !userId) {
-       return this.crypto.get(`bolsa.${crypto}`) || [];
+       return cryptos[crypto] || [];
      } else if (userId) {
-       return this.crypto.get(`users.${userId}${crypto !== '' ? '.' + crypto : ''}`);
+       let us = await this.database.findById(userId);
+       let r = { bitcoin: (us.bitcoin || 0), ethereum: (us.ethereum || 0), litecoin: (us.litecoin || 0) };
+       if (crypto) r = r[crypto];
+       return r;
      } else {
-       return this.crypto.get('bolsa');
+       return cryptos;
      }
   }
   
