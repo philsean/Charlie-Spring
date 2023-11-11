@@ -81,15 +81,15 @@ module.exports = class Economy {
     return await this.setCrypto(crypto, cryptos, userId);
   }
   
-  convertPurse (crypto) {
-    let cryptos = this.getCrypto(crypto);
+  async convertPurse (crypto) {
+    let cryptos = await this.getCrypto(crypto);
     let converters = { bitcoin: 'BTC', ethereum: 'ETH', litecoin: 'LTC' };
     let board = cryptos.length === 0 ? 'A bolsa não tem valores ainda.' : cryptos.map((x, y, z) => `**( ${x === (z[y + 1] || 0) ? '<:arrow_point_rigth:1158002605121875979>' : (x > (z[y + 1] || 0) ? '<:arrow_up:1158002689205084220>' : '<:arrow_down:1158002647413035150>')} ) — ${x} ${converters[crypto] || 'Cryptomoedas'}** ${y === 0 ? '`— Valor atual.`' : ''}`).join('\n');
     return board;
   }
   
-  updatePurse () {
-    let bolsa = this.getCrypto();
+  async updatePurse () {
+    let bolsa = await this.getCrypto();
     Object.entries(bolsa).map((x) => {
       let key = x[0];
       let value = x[1];
@@ -101,6 +101,6 @@ module.exports = class Economy {
       let random = Math.floor(Math.random() * (max - min + 1) + min);
       this.setCrypto(key, random);
     });
-    return this.getCrypto();
+    return await this.getCrypto();
   }
 }
