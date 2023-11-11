@@ -114,12 +114,12 @@ module.exports = {
                     return msg.reply({ content: `( ${client.emoji['STL_X']} ) › Algo deu errado ao registrar, tente novamente. Caso essa mensagem continue aparecendo, fale com meu suporte.` });
                   }
                 }
-                message.error (options) {
+                message.error = (options) => {
                     let m = `**( ${options.emoji || '<:taser:1169712988773695548>'} ) â€º ${this.author},** `
                     if (typeof options == 'string') options = m + options;
                     else options.content = m + options.content;
                     return message.reply(options);
-                }
+                };
                 command.run(client, message, args, User);
             } catch (error) {
                 log(error, 'err');
