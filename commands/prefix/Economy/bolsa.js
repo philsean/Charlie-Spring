@@ -12,11 +12,11 @@ module.exports = {
     }]
   },
   run: async (client, message, args) => {
-    let cooldown = client.database.crypto.get('lastUpdate') || 0;
+    /* let cooldown = client.database.crypto.get('lastUpdate') || 0;
     if ((cooldown + 60000 * 5) < Date.now()) {
       client.database.updatePurse();
       client.database.crypto.set('lastUpdate', Date.now());
-    }
+    } */
     
     let db = client.database;
     let c = {
@@ -41,8 +41,8 @@ module.exports = {
     let rows = [];
     
     let build = async (crypto) => {
-      let board = db.convertPurse(crypto);
-      let cUser = db.getCrypto(crypto, message.author.id) || 0;
+      let board = await db.convertPurse(crypto);
+      let cUser = await db.getCrypto(crypto, message.author.id) || 0;
       let sf = await db.getMoney(message.author);
       // console.log(board, crypto, c[crypto]);
       let down = board.slice(0, 20).includes('arrow_down');
@@ -55,7 +55,8 @@ module.exports = {
       
       embeds = [embed];
       let row = new ActionRowBuilder();
-      if (sf >= db.getCrypto(crypto)[0]) {
+      let vr = await db.getCryoto(crypto);
+      if (sf >= vr[0]) {
         let buy = new ButtonBuilder()
           .setCustomId('buy')
           .setLabel('Comprar')
@@ -81,7 +82,7 @@ module.exports = {
     const collector = msg.createMessageComponentCollector({ filter: filter, componentType: ComponentType.Button, max: 1 });
     collector.on('collect', async (i) => {
       let id = i.customId;
-      let crp = db.getCrypto(coin, i.user.id) || 0;
+      let crp = await db.getCrypto(coin, i.user.id) || 0;
       let mny = await db.getMoney(message.author);
       let max = id === 'buy' ? Math.floor(mny / db.getCrypto(coin)[0]) : crp;
       let mesg = await i.reply({ content: `( <:amount:1158227619066675222> ) › Envie a quantidade de cryptomoedas você deja ${id === 'sale' ? 'vender' : 'comprar'}. **Max: \`${max}\`**` });
@@ -104,9 +105,9 @@ module.exports = {
       };
       let mclt = message.channel.createMessageCollector({ filter: f2, max: 1, time: 15000 });
       mclt.on('collect', async (m) => {
-        crp = db.getCrypto(coin, i.user.id) || 0;
+        crp = await db.getCrypto(coin, i.user.id) || 0;
         mny = await db.getMoney(message.author);
-        let mp = q * db.getCrypto(coin)[0];
+        let mp = q * (await db.getCrypto(coin))[0];
         
         let messages = {
           buy: () => {
