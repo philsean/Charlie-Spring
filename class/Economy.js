@@ -68,7 +68,7 @@ module.exports = class Economy {
       data.save();
     } else {
       let cryptos = await this.crypto.find();
-      let arr = cryptos[crypto].slice(0, 9);
+      let arr = (cryptos[crypto] || []).slice(0, 9);
       arr.unshift(value);
       cryptos.save();
     }
