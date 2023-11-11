@@ -61,21 +61,24 @@ module.exports = class Economy {
      }
   }
   
-  setCrypto (crypto, value, userId) {
+  async setCrypto (crypto, value, userId) {
     if (userId) {
-      this.crypto.set(`users.${userId}.${crypto}`, value);
+      let data = await this.database.findById(userId);
+      data[crypto] = value;
+      data.save();
     } else {
-      let arr = this.getCrypto(crypto);
+      let cryptos = await this.crypto.find();
+      let arr = cryptos[crypto].slice(0, 9);
       arr.unshift(value);
-      this.crypto.set(`bolsa.${crypto}`, arr.slice(0, 10));
+      cryptos.save();
     }
-    return this.crypto.get(`${userId ? 'users.' + userId : 'bolsa'}.${crypto}`);
+    return true;
   }
   
-  addCrypto (crypto, value, userId) {
-    let cryptos = this.getCrypto(crypto, userId) || 0;
+  async addCrypto (crypto, value, userId) {
+    let cryptos = await this.getCrypto(crypto, userId) || 0;
     cryptos += value;
-    return this.setCrypto(crypto, cryptos, userId);
+    return await this.setCrypto(crypto, cryptos, userId);
   }
   
   convertPurse (crypto) {
