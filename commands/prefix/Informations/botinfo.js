@@ -9,8 +9,6 @@ module.exports = {
     aliases: ['infobot', 'bt', 'bi']
   },
   run: async (client, message, args) => {
-    let credit = '624997146453737472';
-    credit = client.users.cache.get(credit) || await client.users.fetch(credit); 
     let owner = '916712541797896263';
     owner = client.users.cache.get(owner) || await client.users.fetch(owner);
     let u = convertMS(client.uptime);
@@ -19,7 +17,7 @@ module.exports = {
     let embed = new EmbedBuilder()
       .setColor(0x5865f2)
       .setAuthor({ name: '› ' + client.user.username + ' | Informações', iconURL: client.user.displayAvatarURL() })
-      .setDescription(`${client.emoji['bunny_grin']} Olá novamente internauta, eu sou a **${client.user.username}**! Sou uma bot com algumas diversas funções, mas focada em jogos e economia \`( mesmo que aja poucos comandos )\`. Veja algumas das minhas informações abaixo:\n## ( ${client.emoji.colab} ) › Créditos\n>>> **${owner.globalName ? owner.globalName + ` \`( ${owner.username} )\`` : owner.username}** — Desenvolvedor.\n**${credit.globalName ? credit.globalName + ` \`( ${credit.username} )\`` : credit.username}** — Hospedagem e códigos do seu bot **SwiftBOT**.`)
+      .setDescription(`${client.emoji['bunny_grin']} Olá novamente internauta, eu sou a **${client.user.username}**! Sou uma bot com algumas diversas funções, mas focada em jogos e economia \`( mesmo que aja poucos comandos )\`. Veja algumas das minhas informações abaixo:\n## ( ${client.emoji.colab} ) › Créditos\n>>> **${owner.globalName ? owner.globalName + ` \`( ${owner.username} )\`` : owner.username}** — Desenvolvedor.\n**${credit.globalName ? credit.globalName + ` \`( ${credit.username} )\`` : credit.username}** — Códigos do seu bot **SwiftBOT**.`)
       .addFields({
         name: `${client.emoji.statistics} › Estatísticas`,
         value: `>>> **Servidores:** \`${(client.guilds.cache.size).toLocaleString('pt-BR')}\`\n**Membros:** \`${(client.guilds.cache.map(g => g.memberCount).reduce((a, b) => a+b, 0)).toLocaleString('pt-BR')}\`\n**Canais:** \`${(client.channels.cache.size).toLocaleString('pt-BR')}\``
