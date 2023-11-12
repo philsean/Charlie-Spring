@@ -55,7 +55,7 @@ module.exports = {
       
       embeds = [embed];
       let row = new ActionRowBuilder();
-      let vr = await db.getCryoto(crypto);
+      let vr = await db.getCrypto(crypto);
       if (sf >= vr[0]) {
         let buy = new ButtonBuilder()
           .setCustomId('buy')
