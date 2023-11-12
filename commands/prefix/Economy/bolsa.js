@@ -84,7 +84,8 @@ module.exports = {
       let id = i.customId;
       let crp = await db.getCrypto(coin, i.user.id) || 0;
       let mny = await db.getMoney(message.author);
-      let max = id === 'buy' ? Math.floor(mny / db.getCrypto(coin)[0]) : crp;
+      let crpp = await db.getCrypto(coin);
+      let max = id === 'buy' ? Math.floor(mny / crpp[0]) : crp;
       let mesg = await i.reply({ content: `( <:amount:1158227619066675222> ) › Envie a quantidade de cryptomoedas você deja ${id === 'sale' ? 'vender' : 'comprar'}. **Max: \`${max}\`**` });
       let q = 0;
       let f2 = (m) => {
@@ -107,7 +108,8 @@ module.exports = {
       mclt.on('collect', async (m) => {
         crp = await db.getCrypto(coin, i.user.id) || 0;
         mny = await db.getMoney(message.author);
-        let mp = q * (await db.getCrypto(coin))[0];
+        crpp = await db.getCrypto(coin);
+        let mp = q * (await crpp[0];
         
         let messages = {
           buy: () => {
