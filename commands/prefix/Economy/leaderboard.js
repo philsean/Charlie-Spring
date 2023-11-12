@@ -10,7 +10,7 @@ module.exports = {
     let lb = [];
     leaderboard.leaderboard.slice(0, 10).map(async ({ _id, economy }, i) => {
       let u = client.users.cache.get(_id) || await client.users.fetch(_id);
-      lb.push(`**[ ${i + 1} ] › ${u.globalName + ` \`( ${u.username} )\`` || u.username}** — ${economy.sapphire || 0} Sapphires`)
+      lb.push(`**[ ${i + 1} ] › ${u.globalName + ` \`( ${u.username} )\`` || u.username}** — ${(economy.sapphire || 0).toLocaleString('pt-br')} Sapphires`)
     });
     let embed = new EmbedBuilder()
       .setColor(0x5865f2)
