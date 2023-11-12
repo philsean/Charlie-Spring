@@ -48,8 +48,8 @@ module.exports = class Economy {
   }
   
   async getCrypto (crypto, userId) {
-    let cryptos = await this.crypto.find();
-    cryptos = cryptos[0];
+    let cryptos = await this.crypto.findOne();
+    cryptos = cryptos.bolsa;
      if (crypto && !userId) {
        return cryptos[crypto] || [];
      } else if (userId) {
