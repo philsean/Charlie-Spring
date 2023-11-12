@@ -109,7 +109,7 @@ module.exports = {
         crp = await db.getCrypto(coin, i.user.id) || 0;
         mny = await db.getMoney(message.author);
         crpp = await db.getCrypto(coin);
-        let mp = q * (await crpp[0];
+        let mp = q * crpp[0];
         
         let messages = {
           buy: () => {
