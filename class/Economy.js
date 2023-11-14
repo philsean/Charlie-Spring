@@ -64,14 +64,14 @@ module.exports = class Economy {
   
   async setCrypto (crypto, value, userId) {
     if (userId) {
-      let data = await this.database.findById(userId);
+      let data = await this.database.findOne({ _id: userId });
       data[crypto] = value;
       data.save();
     } else {
-      let cryptos = await this.crypto.find();
-      let arr = (cryptos[crypto] || []).slice(0, 9);
+      let cryptos = await this.crypto.findOne({ _id: this.client.user.id });
+      let arr = (cryptos.bolsa[crypto] || []).slice(0, 9);
       arr.unshift(value);
-      cryptos[crypto] = arr;
+      cryptos.bolsa[crypto] = arr;
       cryptos.save();
     }
     return true;
