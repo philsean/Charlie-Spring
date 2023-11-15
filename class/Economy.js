@@ -68,7 +68,7 @@ module.exports = class Economy {
       data.economy[crypto] = value;
       data.save();
     } else {
-      let cryptos = await this.crypto.findOne({ _id: this.client.user.id });
+      let cryptos = await this.crypto.findOne();
       let arr = (cryptos.bolsa[crypto] || []).slice(0, 9);
       arr.unshift(value);
       cryptos.bolsa[crypto] = arr;
