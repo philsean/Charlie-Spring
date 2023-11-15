@@ -65,7 +65,7 @@ module.exports = class Economy {
   async setCrypto (crypto, value, userId) {
     if (userId) {
       let data = await this.database.findOne({ _id: userId });
-      data[crypto] = value;
+      data.economy[crypto] = value;
       data.save();
     } else {
       let cryptos = await this.crypto.findOne({ _id: this.client.user.id });
