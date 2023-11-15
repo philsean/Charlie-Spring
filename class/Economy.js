@@ -53,7 +53,7 @@ module.exports = class Economy {
      if (crypto && !userId) {
        return cryptos[crypto] || [];
      } else if (userId) {
-       let us = await this.database.findById(userId);
+       let us = await this.database.findById(userId).then(x => x.economy);
        let r = { bitcoin: (us.bitcoin || 0), ethereum: (us.ethereum || 0), litecoin: (us.litecoin || 0) };
        if (crypto) r = r[crypto];
        return r;
