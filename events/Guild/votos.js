@@ -12,13 +12,13 @@ module.exports = {
     msg = null,
     cont = `**<:dcl_eCoracaozin:804037177029427230> › Obrigado!** Por ter votado em mim, você ganhará **${vote[1]} LiteCoins**.`;
     message.guild.channels.cache.map(y => {
-      let m = y.messages?.cache.find(x => x.author.id === vote[0] && x.content?.includes('.v'));
+      let m = y.messages?.cache.find(x => x.author.id === vote[0] && x.content?.startsWith('.v'));
       if (m) msg = m;
                                           })
     try {
       if (msg) msg.reply(cont)
       else user.send(cont);
-      client.database.addCrypto('litecoin', vote[1] * 1, user.id);
+      client.database.addCrypto('litecoin', vote[1] * 1, vote[0]);
     } catch (err) {
       console.log(err);
     };
