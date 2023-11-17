@@ -26,7 +26,7 @@ module.exports = {
         code = 'exec("' + args.join(' ') + '")';
       } else if (args[0] === '--async') {
         args.shift();
-        code = `(async () => { ${args.join(' ')} })();`
+        code = `(async () => { ${args.join(' ').replaceAll('--r', 'return')} })();`
       }
       
       let evaled = eval(code);
