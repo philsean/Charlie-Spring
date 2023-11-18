@@ -70,8 +70,7 @@ module.exports = class Economy {
     } else {
       // let data = await this.crypto.findOne();
       let cryptos = await this.getCrypto(crypto);
-      let arr = (cryptos[crypto]).slice(0, 9);
-      if (arr.length == 0) arr = [];
+      let arr = (cryptos || []).slice(0, 9);
       arr.unshift(value);
       await this.crypto.updateOne({}, { $set: { [`bolsa.${crypto}`]: arr } });
       return arr;
