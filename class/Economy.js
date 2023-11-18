@@ -71,7 +71,7 @@ module.exports = class Economy {
       let cryptos = await this.getCrypto(crypto);
       let arr = (cryptos[crypto] || []).slice(0, 9);
       arr.unshift(value);
-      this.crypto.findOneAndUpdate({ _id: this.client.user.id }, JSON.parse(`{ "bolsa": { "$set": { "${crypto}": ${arr} } } }`))
+      await this.crypto.findOneAndUpdate({ _id: this.client.user.id }, JSON.parse(`{ "bolsa": { "$set": { "${crypto}": ${arr} } } }`))
     }
     return true;
   }
@@ -91,7 +91,7 @@ module.exports = class Economy {
   
   async updatePurse () {
     let bolsa = await this.getCrypto();
-    Object.entries(bolsa).map((x) => {
+    Object.entries(bolsa).map(async (x) => {
       let key = x[0];
       let value = x[1];
       let update = value.map((x, y, z) => x >= (z[y + 1] || 0)).shuffle();
@@ -100,7 +100,7 @@ module.exports = class Economy {
       update = update[0];
       let [min, max] = update ? [value[0], value[0] * 2] : [~~(value[0] / 2), value[0]];
       let random = Math.floor(Math.random() * (max - min + 1) + min);
-      this.setCrypto(key, random);
+      await this.setCrypto(key, random);
     });
     return await this.getCrypto();
   }
