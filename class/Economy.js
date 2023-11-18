@@ -74,6 +74,7 @@ module.exports = class Economy {
       arr.unshift(value);
       await this.crypto.updateOne({}, { $set: { [`bolsa.${crypto}`]: arr } });
       await data.save();
+      return arr;
     }
     return true;
   }
