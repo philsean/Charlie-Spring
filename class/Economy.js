@@ -71,7 +71,7 @@ module.exports = class Economy {
       let cryptos = await this.getCrypto(crypto);
       let arr = (cryptos[crypto] || []).slice(0, 9);
       arr.unshift(value);
-      await this.crypto.findOneAndUpdate({ _id: this.client.user.id }, JSON.parse(`{ "bolsa": { "$set": { "${crypto}": ${arr} } } }`))
+      await this.crypto.updateOne({ _id: this.client.user.id }, { $set: { [`bolsa.${crypto}`]: arr } })
     }
     return true;
   }
