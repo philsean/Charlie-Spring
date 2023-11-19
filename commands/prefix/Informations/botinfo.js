@@ -9,6 +9,8 @@ module.exports = {
     aliases: ['infobot', 'bt', 'bi']
   },
   run: async (client, message, args) => {
+    let credit = '624997146453737472';
+    credit = client.users.cache.get(credit) || await client.users.fetch(credit);
     let owner = '916712541797896263';
     owner = client.users.cache.get(owner) || await client.users.fetch(owner);
     let u = convertMS(client.uptime);
