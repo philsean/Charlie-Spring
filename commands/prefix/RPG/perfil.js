@@ -41,22 +41,14 @@ module.exports = {
 };
 
 function barrier (options) {
-  let barriers = { off: {
-    start: options.bar?.off?.start || '<:life4:1170197350938054696>',
-    half: options.bar?.off?.half || '<:life5:1170197397847163004>',
-    end: options.bar?.off?.end || '<:life6:1170197438078926848>'
-  }, on: {
-    start: options.bar?.on?.start || '<:life1:1170197212102410303>',
-    half: options.bar?.on?.half || '<:life2:1170197254141902967>',
-    end: options.bar?.on?.end || '<:life3:1170197299520094230>'
-  } },
+  let barriers = { off: { start: options.bar?.off?.start || '<:life4:1170197350938054696>', half: options.bar?.off?.half || '<:life5:1170197397847163004>', end: options.bar?.off?.end || '<:life6:1170197438078926848>' }, on: { start: options.bar?.on?.start || '<:life1:1170197212102410303>', half: options.bar?.on?.half || '<:life2:1170197254141902967>', end: options.bar?.on?.end || '<:life3:1170197299520094230>' } },
       value = options.value || 0,
       max = options.max || 100,
       per = value / max,
       bars = options.bars || 10,
       array = Array(bars).fill(barriers.off.half);
-    for (let i = 0; i < (per * bars); i++) array[i] = barriers.on.half;
-    array[0] = per >= 0.01 ? barriers.on.start : barriers.off.start;
-    array[bars - 1] = per === 1 ? barriers.on.end : barriers.off.end;
-    return array.join('');
-      }
+  for (let i = 0; i < (per * bars); i++) array[i] = barriers.on.half;
+  array[0] = per >= 0.01 ? barriers.on.start : barriers.off.start;
+  array[bars - 1] = per === 1 ? barriers.on.end : barriers.off.end;
+  return array.join('');
+};
