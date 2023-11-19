@@ -65,7 +65,13 @@ module.exports = {
           .setStyle(down ? ButtonStyle.Danger : ButtonStyle.Success);
         row.addComponents(sale);
       }
-        
+      let devcenter = new ButtonBuilder()
+        .setLabel('› Dev. Center')
+        .setCustomID('https://discord.gg/devcenter')
+        .setEmoji('997903854085615707')
+        .setStyle(ButtonStyle.Link);
+      row.addComponents(devcenter);
+      
       if (row.components.length !== 0) rows[0] = row;
     };
     await build(coin);
