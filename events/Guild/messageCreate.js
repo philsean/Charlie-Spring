@@ -46,7 +46,7 @@ module.exports = {
 
         if (command) {
             try {
-                if (message.author.id !== '916712541797896263') return message.reply(`( ${client.emoji.x} ) › Está tendo uma manutenção no momento.`);
+                // if (message.author.id !== '916712541797896263') return message.reply(`( ${client.emoji.x} ) › Está tendo uma manutenção no momento.`);
                 if ((command.structure?.developer || false) && config.users.developers.indexOf(message.author.id) === -1) {
                   await message.reply({ content: `( ${client.emoji.x} ) › Este comando é designado aos meus desenvolvedores.` });
                   return;
