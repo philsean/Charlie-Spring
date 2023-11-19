@@ -12,12 +12,6 @@ module.exports = {
     }]
   },
   run: async (client, message, args) => {
-    /* let cooldown = client.database.crypto.get('lastUpdate') || 0;
-    if ((cooldown + 60000 * 5) < Date.now()) {
-      client.database.updatePurse();
-      client.database.crypto.set('lastUpdate', Date.now());
-    } */
-    
     let db = client.database;
     let c = {
       bitcoin: ['BTC', 'BitCoins'],
