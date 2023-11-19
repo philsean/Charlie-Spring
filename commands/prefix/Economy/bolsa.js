@@ -45,7 +45,7 @@ module.exports = {
         .setTitle(`( <:stock:1158003079178879016> ) › Bolsa de valores — ${c[crypto][1]}`)
         .setColor(color)
         .setDescription('>>> ' + board)
-        .setTimestamp(Date.now())
+        .setTimestamp(await client.database.crypto.findOne().then(x => x.lastUpdate))
         .setFooter({ text: `ch.bolsa <btc|eth|ltc> | Última atualização:` });
       
       embeds = [embed];
