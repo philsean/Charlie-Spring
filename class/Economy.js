@@ -4,8 +4,8 @@ module.exports = class Economy {
   constructor(client, modelName) {
     this.client = client;
     this.database = require(`../Models/${modelName || 'User'}`);
-    this.cooldowns = new NexusDB.Database({ path: './Database/Cooldowns.json' });
-    this.crypto = require(`../Models/Crypto.js`);
+    // this.cooldowns = require('../Models/'); new NexusDB.Database({ path: './Database/Cooldowns.json' });
+    this.crypto = require('../Models/Crypto.js');
   }
   
   async getMoney (user) {
@@ -24,7 +24,8 @@ module.exports = class Economy {
       daily: 86400000,
       work: 3600000
     }
-    let cooldown = this.cooldowns.get(`${user.id}.${cd}`);
+    let cooldown = await this.database.findOne({ _id: user.id }).then(x => x.cooldowns);
+    if (cd) cooldown = cooldown[cd] || cooldown;
     return cooldown;
   }
   
@@ -33,9 +34,9 @@ module.exports = class Economy {
       daily: 86400000,
       work: 3600000
     }
-    let time = Date.now() + (times[cd] || (typeof cd === 'number' ? cd : 0));
-    this.cooldowns.set(`${user.id}.${typeof cd === 'number' ? 'custom' : cd}`, time);
-    return this.getCooldown(user, (typeof cd === 'number' ? 'custom' : cd));
+    let time = Date.now() + (times[cd] || 0);
+    await this.database.updateOne({ _id: user.id }, { $set: { [`cooldowns.${cd}`]: time } });
+    return await this.getCooldown(user, cd);
   }
   
   async getLeaderboard (user) {
