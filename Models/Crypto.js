@@ -7,6 +7,7 @@ module.exports = model('crypto',
       bitcoin: { type: Array, default: [ 136466 ] },
       ethereum: { type: Array, default: [ 27399 ] },
       litecoin: { type: Array, default: [ 3545 ] }
-    }
+    },
+    lastUpdate: { type: Number, default: Date.now() }
   })
 );
