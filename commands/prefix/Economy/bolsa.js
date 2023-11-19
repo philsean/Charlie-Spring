@@ -67,7 +67,7 @@ module.exports = {
       }
       let devcenter = new ButtonBuilder()
         .setLabel('› Dev. Center')
-        .setCustomId('https://discord.gg/devcenter')
+        .setURL('https://discord.gg/devcenter')
         .setEmoji('997903854085615707')
         .setStyle(ButtonStyle.Link);
       row.addComponents(devcenter);
