@@ -3,6 +3,10 @@ const { model, Schema } = require('mongoose');
 module.exports = model('User',
   new Schema({
     _id: { type: String, required: true },
+    cooldowns: {
+      daily: { type: Number, required: false },
+      work: { type: Number, required: false }
+    },
     economy: {
       sapphire: { type: Number, default: 0 },
       bitcoin: { type: Number, required: false },
