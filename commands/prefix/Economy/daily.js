@@ -5,7 +5,8 @@ module.exports = {
   structure: {
     name: 'daily',
     description: 'Resgate sua recompensa diária.',
-    aliases: ['diária', 'dl']
+    aliases: ['diária', 'dl'],
+    developer: true
   },
   run: async (client, message, args) => {
     let cld = await client.database.getCooldown(message.author, 'daily');
