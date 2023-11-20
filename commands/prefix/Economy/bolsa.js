@@ -9,7 +9,8 @@ module.exports = {
     args: [{
       name: 'moeda (btc, eth, ltc)',
       required: false
-    }]
+    }],
+    developer: true
   },
   run: async (client, message, args) => {
     let db = client.database;
