@@ -116,7 +116,7 @@ module.exports = {
         let messages = {
           buy: () => {
             db.setCrypto(coin, crp + q, m.author.id);
-            db.setMoney(m.author, Number('-' + mp));
+            db.setMoney(m.author, -mp);
             return `( <:buy:1158227181701431336> ) › Você comprou no total **${q} ${c[coin][1]}** por **${mp} Sapphires**.`;
           },
           sale: () => {
