@@ -63,4 +63,11 @@ module.exports = class Puzzle {
 
     this.message.channel.send({ embeds: [embed], components: rows });
   }
+
+  barter (on, to) {
+    let table = this.in.table;
+    this.in.table[on] = this.in.table[to];
+    this.in.table[to] = this.in.table[on];
+    if (this.in.table === this.in.solved) this.in.win = true;
+  }
 }
