@@ -1,21 +1,52 @@
-const puzzles = [
-  [ '<:hda1:1185230990608711730>', '<:hda2:1185231279722074223>', '<:hda3:1185231355538325555>', '<:hda4:1185231400295727254>'
-    '<:hda5:1185231459045351534>', '<:hda6:1185231495732932688>', '<:hda7:1185231535872409621>', '<:hda8:1185231585503625296>'],
-  [ '', '', '', ''
-    '', '', '', ''],
-  [ '', '', '', ''
-    '', '', '', ''],
-  [ '', '', '', ''
-    '', '', '', '']
-];
+const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require('discord.js');
+const puzzles = {
+  1: {
+    name: 'Hora de Aventura (Adventure Time)',
+    abb: 'hda',
+    emojis: [ '<:hda1:1185230990608711730>', '<:hda2:1185231279722074223>', '<:hda3:1185231355538325555>', '<:hda4:1185231400295727254>'
+    '<:hda5:1185231459045351534>', '<:hda6:1185231495732932688>', '<:hda7:1185231535872409621>', '<:hda8:1185231585503625296>']
+  },
+  2: {
+    name: 'A Noite Estrelada - Vincent Van Gogh (The Starry Night)',
+    abb: 'ne',
+    emojis: [ '<:ne1:1186621328372023426>', '<:ne2:1186621366011703316>', '<:ne3:1186621402606997534>', '<:ne4:1186621442339651584>'
+    '<:ne5:1186621486975426560>', '<:ne6:1186621522916425798>', '<:ne7:1186621572199497758>', '<:ne8:1186621615346286673>']
+  },
+  3: {
+    name: 'Five Nights at Freddy’s',
+    abb: 'fnaf',
+    emojis: [ '<:fnaf1:1186620484155080744>', '<:fnaf2:1186620516157640755>', '<:fnaf3:1186620550039212134>', '<:fnaf4:1186620591126614016>'
+    '<:fnaf5:1186620635028402278>', '<:fnaf6:1186620673913798666>', '<:fnaf7:1186620705534656622>', '<:fnaf8:1186620769913024554>']
+  },
+  4: {
+    name: 'Hollow Knight',
+    abb: 'hk',
+    emojis: [ '<:hk1:1186622383306579988>', '<:hk2:1186622422846292019>', '<:hk3:1186622453582143500>', '<:hk4:1186622480241139722>'
+    '<:hk5:1186622517696278568>', '<:hk6:1186622552311873638>', '<:hk7:1186622583513284628>', '<:hk8:1186622612126842900>']
+  }
+};
 
 module.exports = class Puzzle {
   constructor ({ client, message }) {
     this.client = client;
     this.message = message;
-    this.image = ([0, 1, 2, 3].sort(() => 0.5 - Math.random()))[0];
-    this.puzzle = puzzles[image].sort(() => 0.5 - Math.random());
-    this.moves = [];
+    this.image = ([1, 2, 3, 4].sort(() => 0.5 - Math.random()))[0];
+    this.puzzle = puzzles[this.image];
+    this.in = {
+      tip: false,
+      solved: Array(8).fill(this.puzzle.abb).map((x, i) => `${x}_${i}`)
+      table: Array(8).fill(this.puzzle.abb).map((x, i) => `${x}_${i}`).sort(() => 0.5 - Math.random()),
+      win: false,
+      moves: []
+    };
     
+  }
+  
+  start ({ tip }) {
+    this.in.tip = true;
+    const embed = new EmbedBuilder()
+			.setTitle(this.puzzle.name + ' - Puzzle')
+			.setDescription('Resolva este quebra-cabeça e ganhe algo no final.\n**_Resolvido_:** `( Você ganha menos pelas dica. )\n||${puzzles[this.image].emojis}||`')
+     
   }
 }
