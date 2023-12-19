@@ -34,7 +34,7 @@ module.exports = class Puzzle {
     this.puzzle = puzzles[this.image];
     this.in = {
       tip: false,
-      solved: Array(8).fill(this.puzzle.abb).map((x, i) => `${x}_${i}`)
+      solved: Array(8).fill(this.puzzle.abb).map((x, i) => `${x}_${i}`),
       table: Array(8).fill(this.puzzle.abb).map((x, i) => `${x}_${i}`).sort(() => 0.5 - Math.random()),
       win: false,
       moves: []
