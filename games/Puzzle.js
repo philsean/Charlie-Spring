@@ -46,7 +46,20 @@ module.exports = class Puzzle {
     this.in.tip = true;
     const embed = new EmbedBuilder()
 			.setTitle(this.puzzle.name + ' - Puzzle')
-			.setDescription('Resolva este quebra-cabeça e ganhe algo no final.\n**_Resolvido_:** `( Você ganha menos pelas dica. )\n||${puzzles[this.image].emojis}||`')
-     
+			.setDescription('Resolva este quebra-cabeça e ganhe algo no final.\n**_Resolvido_:** `( Você ganha menos pelas dicas. )\n||${this.puzzle.emojis.slice(0, 4).join(' ') + '\n' + this.puzzle.emojis.slice(4, 8).join(' ')}||`');
+    
+    const rows = [new ActionRowBuilder(), new ActionRowBuilder()];
+    
+    this.in.table.map((x, i) => {
+      let emoji = this.puzzle.emojis[x.split('_')[1]].replace('>').split(':')[3];
+      let b = new ButtonBuilder()
+        .setCustomId(`puzzle_${i}`)
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji(emoji);
+
+      rows[Math.floor(i / 4)] = rows[Math.floor(i / 4)].addComponents(b);
+    });
+
+    this.message.channel.send({ embeds: [embed], components: rows });
   }
 }
