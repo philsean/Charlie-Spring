@@ -51,7 +51,7 @@ module.exports = class Puzzle {
     const rows = [new ActionRowBuilder(), new ActionRowBuilder()];
     
     this.in.table.map((x, i) => {
-      let emoji = this.puzzle.emojis[x.split('_')[1]].replace('>', '').split(':')[3];
+      let emoji = this.puzzle.emojis[x.split('_')[1]].replace('>', '').split(':')[2];
       let b = new ButtonBuilder()
         .setCustomId(`puzzle_${i}`)
         .setStyle(ButtonStyle.Secondary)
