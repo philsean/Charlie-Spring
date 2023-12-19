@@ -43,7 +43,7 @@ module.exports = class Puzzle {
   }
   
   start ({ tip }) {
-    this.in.tip = true;
+    this.in.tip = tip || false;
     const embed = new EmbedBuilder()
 			.setTitle(this.puzzle.name + ' - Puzzle')
 			.setDescription(`Resolva este quebra-cabeça e ganhe algo no final.\n**_Resolvido_:** \`( Você ganha menos pelas dicas. )\`\n||${this.puzzle.emojis.slice(0, 4).join(' ') + '\n' + this.puzzle.emojis.slice(4, 8).join(' ')}||`);
@@ -51,7 +51,7 @@ module.exports = class Puzzle {
     const rows = [new ActionRowBuilder(), new ActionRowBuilder()];
     
     this.in.table.map((x, i) => {
-      let emoji = this.puzzle.emojis[x.split('_')[1]].replace('>').split(':')[3];
+      let emoji = this.puzzle.emojis[x.split('_')[1]].replace('>', '').split(':')[3];
       let b = new ButtonBuilder()
         .setCustomId(`puzzle_${i}`)
         .setStyle(ButtonStyle.Secondary)
