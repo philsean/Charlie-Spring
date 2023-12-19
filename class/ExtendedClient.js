@@ -46,7 +46,8 @@ module.exports = class extends Client {
         connect4: new Map(),
         anagrama: new Map(),
         matching: new Map(),
-        maze: new Map()
+        maze: new Map(),
+        puzzle: new Map()
       };
       this.emoji = {
         x: '<:STL_X:1129745080413069412>'
