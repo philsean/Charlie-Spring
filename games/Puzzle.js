@@ -46,7 +46,7 @@ module.exports = class Puzzle {
     this.in.tip = tip || false;
     const embed = new EmbedBuilder()
 			.setTitle(this.puzzle.name + ' - Puzzle')
-			.setDescription(`Resolva este quebra-cabeça e ganhe algo no final.\n**_Resolvido_:** \`( Você ganha menos pelas dicas. )\`\n||${this.puzzle.emojis.slice(0, 4).join(' ') + '\n' + this.puzzle.emojis.slice(4, 8).join(' ')}||`);
+			.setDescription(`Resolva este quebra-cabeça e ganhe algo no final.` + (tip ? `\n**_Resolvido_:** \`( Você ganha menos pelas dicas. )\`\n||${this.puzzle.emojis.slice(0, 4).join(' ') + '\n' + this.puzzle.emojis.slice(4, 8).join(' ')}||` : ''));
     
     const rows = [new ActionRowBuilder(), new ActionRowBuilder()];
     
