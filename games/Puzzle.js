@@ -47,7 +47,7 @@ module.exports = class Puzzle {
     const embed = new EmbedBuilder()
      .setColor(0x5865F2)
 			.setTitle(this.puzzle.name + ' - Puzzle')
-			.setDescription(`Resolva este quebra-cabeça e ganhe algo no final.` + (tip ? `\n**_Resolvido_:** \`( Você ganha menos pelas dicas. )\`\n||${this.puzzle.emojis.slice(0, 4).join(' ') + '\n' + this.puzzle.emojis.slice(4, 8).join(' ')}||` : ''));
+			.setDescription(`Resolva este quebra-cabeça e ganhe algo no final.` + (tip ? `\n**_Resolvido_:** \`( Você ganha menos pelas dicas. )\`\n||${this.puzzle.emojis.slice(0, 4).join('') + '\n' + this.puzzle.emojis.slice(4, 8).join('')}||` : ''));
     
     const rows = [new ActionRowBuilder(), new ActionRowBuilder()];
     
