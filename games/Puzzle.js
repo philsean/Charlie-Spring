@@ -89,7 +89,7 @@ module.exports = class Puzzle {
           this.in.moves.push(position);
           this.barter(this.moving);
           update();
-          if (this.in.win) mv.stop('win');
+          if (this.in.win) mv.stop(['win']);
         };
         i.editReply({ embeds: [embed], components: rows });
       });
