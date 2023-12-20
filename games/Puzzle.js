@@ -91,7 +91,7 @@ module.exports = class Puzzle {
           update();
           if (wined) mv.stop('win');
         };
-        i.editReply({ embeds: embeds, components: rows });
+        i.editReply({ embeds: [embed], components: rows });
       });
       mv.on('end', () => {
         this.display.components.map((_, i) => {
