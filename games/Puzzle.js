@@ -80,7 +80,7 @@ module.exports = class Puzzle {
         await i.deferUpdate()
         let position = Number(i.customId.split('_')[1]);
         
-        if (!this.moving.on) {
+        if (this.moving.on == undefined) {
           this.moving.on = position;
           updateButtons();
         } else {
