@@ -15,7 +15,7 @@ module.exports = {
     let withoutTip = new ButtonBuilder().setCustomId('without').setLabel('Começar.').setStyle(ButtonStyle.Secondary);
     let withTip = new ButtonBuilder().setCustomId('with').setLabel('Começar com dicas.').setStyle(ButtonStyle.Primary);
 
-    client.games.puzzle.set(message.author.id, new Puzzle({ client, message }););
+    client.games.puzzle.set(message.author.id, new Puzzle({ client, message }));
     game = client.games.puzzle.get(message.author.id);
 
     message.reply({ content: '**( 🧩 ) › Puzzle `( Quebra-cabeça )`**\n>>> O jogo consiste em você colocar as peças em seus lugares correspondentes, ao conseguir resolver um puzzle você ganha algo aleatório decidido pelo bot. Claro, quanto mais você joga, mais as chances de você ganhar algo bom aumenta.\n\n*Clique no botão abaixo para iniciar um puzzle, e boa sorte.*', components: [new ActionRowBuilder().addComponents(withoutTip, withTip)] }).then((q) => {
