@@ -106,9 +106,9 @@ module.exports = class Puzzle {
   }
 
   barter ({ on, to }) {
-    let table = Object(this.in.table);
-    this.in.table[on] = table[to];
-    this.in.table[to] = table[on];
+    let I = { on: String(this.in.table[on]), to: String(this.in.table[to]) }
+    this.in.table[on] = I.to;
+    this.in.table[to] = I.on;
     this.moving = {};
     if (this.in.table !== this.in.solved) return false;
     this.in.win = true;
