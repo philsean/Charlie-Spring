@@ -18,7 +18,7 @@ module.exports = {
     try {
       if (msg) msg.reply(cont)
       else user.send(cont);
-      client.database.addCrypto('litecoin', vote[1] * 1, vote[0]);
+      client.database.setMoney(user, vote[1] * 1500);
     } catch (err) {
       console.log(err);
     };
