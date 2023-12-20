@@ -74,6 +74,7 @@ module.exports = class Puzzle {
         this.display.components.map((_, i) => {
           this.display.components[i].components.map((__, y) => {
             this.display.components[i].components[y].data.disabled = true;
+            this.display.edit({ embeds: this.display.embeds, components: this.display.components });
           });
         });
       });
