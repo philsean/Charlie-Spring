@@ -25,7 +25,7 @@ module.exports = {
       quest.on('collect', (i) => {
         game.start(Boolean(i.customId));
       });
-      quest.on('end', => {
+      quest.on('end', () => {
         game.end();
       });
     });
