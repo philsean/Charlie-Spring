@@ -49,12 +49,13 @@ module.exports = class Puzzle {
     this.started = true;
     let rows;
     let embed;
-    let updateButtons = () => {
+    let a = 0;
+    let update = () => {
       embed = new EmbedBuilder()
         .setColor(0x5865F2)
 			   .setTitle(this.puzzle.name + ' - Puzzle')
 			   .setDescription(`Resolva este quebra-cabeça e ganhe algo no final.` + (tip ? `\n**_Resolvido_:** \`( Você ganha menos pelas dicas. )\`\n||${this.puzzle.emojis.slice(0, 4).join('') + '\n' + this.puzzle.emojis.slice(4, 8).join('')}||` : ''))
-        .setFooter({ text: `Movimentos: ${this.in.moves.length}` });
+        .setFooter({ text: `Movimentos: ${this.in.moves.length} | ${a}` });
 
     
       rows = [new ActionRowBuilder(), new ActionRowBuilder()];
@@ -69,7 +70,7 @@ module.exports = class Puzzle {
         rows[Math.floor(i / 4)] = rows[Math.floor(i / 4)].addComponents(b);
       });
     };
-    updateButtons();
+    update();
 
     this.message.channel.send({ embeds: [embed], components: rows }).then((display) => {
       this.display = display;
@@ -82,16 +83,15 @@ module.exports = class Puzzle {
         
         if (this.moving.on == undefined) {
           this.moving.on = position;
-          updateButtons();
+          update();
         } else {
           this.moving.to = position;
           this.in.moves.push(position);
           let wined = this.barter(this.moving);
-          this.moving = {};
-          updateButtons();
+          update();
           if (wined) mv.stop('win');
         };
-        i.editReply({ embeds: this.display.embeds, components: this.display.components });
+        i.editReply({ embeds: embeds, components: rows });
       });
       mv.on('end', () => {
         this.display.components.map((_, i) => {
@@ -109,6 +109,7 @@ module.exports = class Puzzle {
     let table = this.in.table;
     this.in.table[on] = table[to];
     this.in.table[to] = table[on];
+    this.moving = {};
     if (this.in.table !== this.in.solved) return false;
     this.in.win = true;
     return true;
