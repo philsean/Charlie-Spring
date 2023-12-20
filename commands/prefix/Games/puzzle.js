@@ -12,8 +12,8 @@ module.exports = {
     let game = client.games.puzzle.get(message.author.id);
     if (game) return message.reply(`( ${client.emoji.x} ) › Já tem uma partida sua rolando: https://discord.com/channels/${game.display.guild.id}/${game.display.channel.id}/${game.display.id}`);
     
-    let withoutTip = new ButtonBuilder().setCustomId('false').setLabel('Começar.').setStyle(ButtonStyle.Secondary);
-    let withTip = new ButtonBuilder().setCustomId('true').setLabel('Começar com dicas.').setStyle(ButtonStyle.Primary);
+    let withoutTip = new ButtonBuilder().setCustomId('without').setLabel('Começar.').setStyle(ButtonStyle.Secondary);
+    let withTip = new ButtonBuilder().setCustomId('with').setLabel('Começar com dicas.').setStyle(ButtonStyle.Primary);
 
     game = new Puzzle({ client, message });
     client.games.puzzle.set(message.author.id, game);
@@ -24,7 +24,7 @@ module.exports = {
 
       quest.on('collect', (i) => {
         q.delete();
-        game.start({ tip: Boolean(i.customId) });
+        game.start({ tip: i.customId === 'with' ? true : false });
       });
       quest.on('end', () => {
         client.games.puzzle.delete(message.author.id);
