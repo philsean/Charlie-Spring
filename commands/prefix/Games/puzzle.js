@@ -24,7 +24,7 @@ module.exports = {
 
       quest.on('collect', (i) => {
         q.delete();
-        game.start(Boolean(i.customId));
+        game.start({ tip: Boolean(i.customId) });
       });
       quest.on('end', () => {
         client.games.puzzle.delete(message.author.id);
