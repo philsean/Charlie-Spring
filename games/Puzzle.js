@@ -32,6 +32,7 @@ module.exports = class Puzzle {
     this.message = message;
     this.image = ([1, 2, 3, 4].sort(() => 0.5 - Math.random()))[0];
     this.puzzle = puzzles[this.image];
+    this.display = null;
     this.in = {
       tip: false,
       solved: Array(8).fill(this.puzzle.abb).map((x, i) => `${x}_${i}`),
@@ -39,7 +40,7 @@ module.exports = class Puzzle {
       win: false,
       moves: []
     };
-    
+    this.moving = {};
   }
   
   start ({ tip }) {
@@ -61,7 +62,22 @@ module.exports = class Puzzle {
       rows[Math.floor(i / 4)] = rows[Math.floor(i / 4)].addComponents(b);
     });
 
-    this.message.channel.send({ embeds: [embed], components: rows });
+    this.message.channel.send({ embeds: [embed], components: rows }).then((display) => {
+      this.display = display;
+      let filter = (i) => i.user.id === this.message.author.id;
+      let mv = display.createMessageComponentCollector({ filter, componentType: ComponentType.Button, idle: 15000, errors: ['idle'] });
+
+      mv.on('collect', async (i) => {
+
+      });
+      mv.on('end', () => {
+        this.display.components.map((_, i) => {
+          this.display.components[i].components.map((__, y) => {
+            this.display.components[i].components[y].data.disabled = true;
+          });
+        });
+      });
+    });
   }
 
   barter (on, to) {
