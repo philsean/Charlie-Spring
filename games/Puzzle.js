@@ -51,26 +51,40 @@ module.exports = class Puzzle {
      .setColor(0x5865F2)
 			.setTitle(this.puzzle.name + ' - Puzzle')
 			.setDescription(`Resolva este quebra-cabeça e ganhe algo no final.` + (tip ? `\n**_Resolvido_:** \`( Você ganha menos pelas dicas. )\`\n||${this.puzzle.emojis.slice(0, 4).join('') + '\n' + this.puzzle.emojis.slice(4, 8).join('')}||` : ''));
-    
-    const rows = [new ActionRowBuilder(), new ActionRowBuilder()];
-    
-    this.in.table.map((x, i) => {
-      let emoji = this.puzzle.emojis[x.split('_')[1]].replace('>', '').split(':')[2];
-      let b = new ButtonBuilder()
-        .setCustomId(`puzzle_${i}`)
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji(emoji);
 
-      rows[Math.floor(i / 4)] = rows[Math.floor(i / 4)].addComponents(b);
-    });
+    let rows;
+    let updateButtons = () => {
+      rows = [new ActionRowBuilder(), new ActionRowBuilder()];
+    
+      this.in.table.map((x, i) => {
+        let emoji = this.puzzle.emojis[x.split('_')[1]].replace('>', '').split(':')[2];
+        let b = new ButtonBuilder()
+          .setCustomId(`puzzle_${i}`)
+          .setStyle(this.in.tip ? (this.in.table[i] === this.in.solved[i] ? ButtonStyle.Success : ButtonStyle.Secondary) : (i.endsWith(String(this.moving.on)) ? ButtonStyle.Primary : ButtonStyle.Secondary))
+          .setEmoji(emoji);
+
+        rows[Math.floor(i / 4)] = rows[Math.floor(i / 4)].addComponents(b);
+      });
+    };
+    updateButtons();
 
     this.message.channel.send({ embeds: [embed], components: rows }).then((display) => {
       this.display = display;
       let filter = (i) => i.user.id === this.message.author.id;
-      let mv = display.createMessageComponentCollector({ filter, componentType: ComponentType.Button, idle: 15000, errors: ['idle'] });
+      let mv = display.createMessageComponentCollector({ filter, componentType: ComponentType.Button, idle: 15000, errors: ['idle', 'win'] });
 
       mv.on('collect', async (i) => {
-
+        let position = Number(i.customId.split('_')[1]);
+        if (!this.moving.on) {
+          this.moving.on = position;
+          updateButtons();
+        } else {
+          this.moving.to = position;
+          let wined = this.barter(this.moving);
+          this.moving = {};
+          updateButtons();
+          if (wined) mv.stop('win');
+        }
       });
       mv.on('end', () => {
         this.display.components.map((_, i) => {
@@ -84,10 +98,12 @@ module.exports = class Puzzle {
     });
   }
 
-  barter (on, to) {
+  barter ({ on, to }) {
     let table = this.in.table;
     this.in.table[on] = this.in.table[to];
     this.in.table[to] = this.in.table[on];
-    if (this.in.table === this.in.solved) this.in.win = true;
+    if (this.in.table !== this.in.solved) return false;
+    this.in.win = true;
+    return true;
   }
 }
