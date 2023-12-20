@@ -5,8 +5,7 @@ module.exports = {
   structure: {
     name: 'puzzle',
     description: 'Resolva o quebra cabeça.',
-    aliases: ['quebra-cabeça'],
-    developer: true
+    aliases: ['quebra-cabeça']
   },
   run: async (client, message, args) => {
     let game = client.games.puzzle.get(message.author.id);
@@ -18,7 +17,7 @@ module.exports = {
     client.games.puzzle.set(message.author.id, new Puzzle({ client, message }));
     game = client.games.puzzle.get(message.author.id);
 
-    message.reply({ content: '**( 🧩 ) › Puzzle `( Quebra-cabeça )`**\n>>> O jogo consiste em você colocar as peças em seus lugares correspondentes, ao conseguir resolver um puzzle você ganha algo aleatório decidido pelo bot. Claro, quanto mais você joga, mais as chances de você ganhar algo bom aumenta.\n\n*Clique no botão abaixo para iniciar um puzzle, e boa sorte.*', components: [new ActionRowBuilder().addComponents(withoutTip, withTip)] }).then((q) => {
+    message.reply({ content: '**( 🧩 ) › Puzzle `( Quebra-cabeça )` [ BETA ]**\n>>> O jogo consiste em você colocar as peças em seus lugares correspondentes, ao conseguir resolver um puzzle você ganha algo aleatório decidido pelo bot. Claro, quanto mais você joga, mais as chances de você ganhar algo bom aumenta.\n\n*Clique no botão abaixo para iniciar um puzzle, e boa sorte.*', components: [new ActionRowBuilder().addComponents(withoutTip, withTip)] }).then((q) => {
       let filter = (i) => i.user.id === message.author.id;
       let quest = q.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 15000, max: 1 });
 
