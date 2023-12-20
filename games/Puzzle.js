@@ -49,13 +49,12 @@ module.exports = class Puzzle {
     this.started = true;
     let rows;
     let embed;
-    let a = 0;
     let update = () => {
       embed = new EmbedBuilder()
         .setColor(0x5865F2)
 			   .setTitle(this.puzzle.name + ' - Puzzle')
 			   .setDescription(`Resolva este quebra-cabeça e ganhe algo no final.` + (tip ? `\n**_Resolvido_:** \`( Você ganha menos pelas dicas. )\`\n||${this.puzzle.emojis.slice(0, 4).join('') + '\n' + this.puzzle.emojis.slice(4, 8).join('')}||` : ''))
-        .setFooter({ text: `Movimentos: ${this.in.moves.length} | ${a}` });
+        .setFooter({ text: `Movimentos: ${this.in.moves.length}` });
 
     
       rows = [new ActionRowBuilder(), new ActionRowBuilder()];
@@ -75,7 +74,7 @@ module.exports = class Puzzle {
     this.message.channel.send({ embeds: [embed], components: rows }).then((display) => {
       this.display = display;
       let filter = (i) => i.user.id === this.message.author.id;
-      let mv = display.createMessageComponentCollector({ filter, componentType: ComponentType.Button, idle: 60000, errors: ['idle', 'win'] });
+      let mv = display.createMessageComponentCollector({ filter, componentType: ComponentType.Button, idle: 60000 });
 
       mv.on('collect', async (i) => {
         await i.deferUpdate()
@@ -89,7 +88,7 @@ module.exports = class Puzzle {
           this.in.moves.push(position);
           this.barter(this.moving);
           update();
-          if (this.in.win) mv.stop(['win']);
+          if (this.in.win) mv.stop('win');
         };
         i.editReply({ embeds: [embed], components: rows });
       });
