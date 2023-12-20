@@ -60,7 +60,7 @@ module.exports = class Puzzle {
         let emoji = this.puzzle.emojis[x.split('_')[1]].replace('>', '').split(':')[2];
         let b = new ButtonBuilder()
           .setCustomId(`puzzle_${i}`)
-          .setStyle(this.in.tip ? (this.in.table[i] === this.in.solved[i] ? ButtonStyle.Success : ButtonStyle.Secondary) : (i.endsWith(String(this.moving.on)) ? ButtonStyle.Primary : ButtonStyle.Secondary))
+          .setStyle(this.in.tip ? (this.in.table[i] === this.in.solved[i] ? ButtonStyle.Success : ButtonStyle.Secondary) : (x.endsWith(String(this.moving.on)) ? ButtonStyle.Primary : ButtonStyle.Secondary))
           .setEmoji(emoji);
 
         rows[Math.floor(i / 4)] = rows[Math.floor(i / 4)].addComponents(b);
