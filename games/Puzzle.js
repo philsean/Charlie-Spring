@@ -79,6 +79,7 @@ module.exports = class Puzzle {
           });
         });
         this.display.edit({ embeds: this.display.embeds, components: this.display.components });
+        this.client.games.puzzle.delete(this.message.author.id);
       });
     });
   }
