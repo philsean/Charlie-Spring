@@ -74,6 +74,7 @@ module.exports = class Puzzle {
       let mv = display.createMessageComponentCollector({ filter, componentType: ComponentType.Button, idle: 15000, errors: ['idle', 'win'] });
 
       mv.on('collect', async (i) => {
+        await i.deferUpdate()
         let position = Number(i.customId.split('_')[1]);
         if (!this.moving.on) {
           this.moving.on = position;
@@ -84,7 +85,8 @@ module.exports = class Puzzle {
           this.moving = {};
           updateButtons();
           if (wined) mv.stop('win');
-        }
+        };
+        i.editReply({ embeds: this.display.embeds, components: this.display.components });
       });
       mv.on('end', () => {
         this.display.components.map((_, i) => {
