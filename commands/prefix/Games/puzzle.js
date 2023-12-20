@@ -23,10 +23,11 @@ module.exports = {
       let quest = q.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 15000, max: 1, errors: ['time'] });
 
       quest.on('collect', (i) => {
+        q.delete();
         game.start(Boolean(i.customId));
       });
       quest.on('end', () => {
-        game.end();
+        client.games.puzzle.delete(message.author.id);
       });
     });
   }
