@@ -20,7 +20,7 @@ module.exports = {
     
     message.reply({ content: '**( 🧩 ) › Puzzle `( Quebra-cabeça )`**\n>>> O jogo consiste em você colocar as peças em seus lugares correspondentes, ao conseguir resolver um puzzle você ganha algo aleatório decidido pelo bot. Claro, quanto mais você joga, mais as chances de você ganhar algo bom aumenta.\n\n*Clique no botão abaixo para iniciar um puzzle, e boa sorte.*', components: [new ActionRowBuilder().addComponents(withoutTip, withTip)] }).then((q) => {
       let filter = (i) => i.user.id === message.author.id;
-      let quest = q.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 15000, max: 1, errors: ['time'] });
+      let quest = q.createMessageComponentCollector({ filter, componentType: ComponentType.Button, max: 1, errors: ['time'] });
 
       quest.on('collect', (i) => {
         q.delete();
