@@ -41,10 +41,12 @@ module.exports = class Puzzle {
       moves: []
     };
     this.moving = {};
+    this.started = false;
   }
   
   start ({ tip }) {
     this.in.tip = tip || false;
+    this.started = true;
     const embed = new EmbedBuilder()
      .setColor(0x5865F2)
 			.setTitle(this.puzzle.name + ' - Puzzle')
