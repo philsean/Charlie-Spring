@@ -110,6 +110,6 @@ module.exports = class Puzzle {
     this.in.table[on] = I.to;
     this.in.table[to] = I.on;
     this.moving = {};
-    return !this.in.table((x, i) => x !== this.in.solved[i]);
+    return !this.in.table.some((x, i) => x !== this.in.solved[i]);
   }
 }
