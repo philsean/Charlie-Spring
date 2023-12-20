@@ -106,7 +106,7 @@ module.exports = class Puzzle {
   }
 
   barter ({ on, to }) {
-    let table = this.in.table;
+    let table = Object(this.in.table);
     this.in.table[on] = table[to];
     this.in.table[to] = table[on];
     this.moving = {};
