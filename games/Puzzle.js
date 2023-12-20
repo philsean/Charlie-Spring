@@ -87,9 +87,9 @@ module.exports = class Puzzle {
         } else {
           this.moving.to = position;
           this.in.moves.push(position);
-          let wined = this.barter(this.moving);
+          this.barter(this.moving);
           update();
-          if (wined) mv.stop('win');
+          if (this.in.win) mv.stop('win');
         };
         i.editReply({ embeds: [embed], components: rows });
       });
@@ -110,6 +110,6 @@ module.exports = class Puzzle {
     this.in.table[on] = I.to;
     this.in.table[to] = I.on;
     this.moving = {};
-    return !this.in.table.some((x, i) => !x.endsWith(i));
+    this.in.win = !this.in.table.some((x, i) => !x.endsWith(i));
   }
 }
