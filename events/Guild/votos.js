@@ -10,7 +10,7 @@ module.exports = {
     let vote = message.embeds[0]?.footer?.text.split('_'),
     user = client.users.cache.get(vote[0]) || await client.users.fetch(vote[0]),
     msg = null,
-    cont = `**<:dcl_eCoracaozin:804037177029427230> › Obrigado!** Por ter votado em mim, você ganhará **${vote[1]} LiteCoins**.`;
+    cont = `**<:dcl_eCoracaozin:804037177029427230> › Obrigado!** Por ter votado em mim, você ganhará **${vote[1] * 1500} Sapphires**.`;
     message.guild.channels.cache.map(y => {
       let m = y.messages?.cache.find(x => x.author.id === vote[0] && x.content?.startsWith('.v'));
       if (m) msg = m;
